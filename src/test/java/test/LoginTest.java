@@ -8,6 +8,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import page.LoginPage;
+import page.MainPage;
 
 import static java.lang.Thread.sleep;
 
@@ -15,20 +16,12 @@ import static java.lang.Thread.sleep;
  * Created by Java Script on 20.05.2017.
  */
 public class LoginTest {
-    public static WebDriver webDriver;
-    public static LoginPage loginPage;
+    public WebDriver webDriver;
+    public LoginPage loginPage;
 
       @BeforeMethod
     public void beforeMethod() {
         webDriver=new FirefoxDriver();
-        loginPage=new LoginPage(webDriver);
-        webDriver.navigate().to("https://alerts.shotspotter.biz");
-
-        try {
-            sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     @AfterMethod
@@ -38,37 +31,12 @@ public class LoginTest {
 
     @Test
     public void testLoginPositive() {
+        loginPage=new LoginPage(webDriver);
         Assert.assertEquals(webDriver.getTitle(), "Shotspotter - Login", "Main page title is wrong");
         Assert.assertEquals(webDriver.getCurrentUrl(),"https://alerts.shotspotter.biz/", "Wrong URL on Login test");
-
-       /** LoginPage.emailField.sendKeys("denvert1@shotspotter.net");
-        LoginPage.passwordField.sendKeys("Test123!");
-        LoginPage.chkRemember.click();
-        LoginPage.GObutton.click();*/
-
-       loginPage.inputEmail("denvert1@shotspotter.net");
-       loginPage.inputPassword("Test123!");
-       loginPage.clickChkRemember();
-       loginPage.clickGObutton();
-        try {
-            sleep(7000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        MainPage mainPage = loginPage.LoginAs("denvert1@shotspotter.net", "Test123!");
         Assert.assertEquals(webDriver.getTitle(), "Shotspotter");
         Assert.assertTrue(webDriver.getCurrentUrl().contains("https://alerts.shotspotter.biz/main"),"Wrong URL on Main page");
-
-        WebElement map=webDriver.findElement(By.xpath("//div[@class='map']"));
-        map.click();
-        try {
-            sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Assert.assertTrue(webDriver.findElement(By.className("settings")).isDisplayed(), "Settings icons is not displayed");
-        /**webDriver.findElement(By.xpath("//div[@class='drawer-toggle footer-button list']")).click();
-        webDriver.findElement(By.xpath("//div[@class='address' and text()=' 3868 Adams St']")).click();*/
-
-
+        Assert.assertTrue(mainPage.isPageLoaded(), "Settings icon is not displayed");
     }
 }
