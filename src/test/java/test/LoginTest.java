@@ -16,11 +16,14 @@ import static java.lang.Thread.sleep;
  */
 public class LoginTest {
     public static WebDriver webDriver;
+    public static LoginPage loginPage;
 
-    @BeforeMethod
+      @BeforeMethod
     public void beforeMethod() {
         webDriver=new FirefoxDriver();
+        loginPage=new LoginPage(webDriver);
         webDriver.navigate().to("https://alerts.shotspotter.biz");
+
         try {
             sleep(5000);
         } catch (InterruptedException e) {
@@ -38,10 +41,15 @@ public class LoginTest {
         Assert.assertEquals(webDriver.getTitle(), "Shotspotter - Login", "Main page title is wrong");
         Assert.assertEquals(webDriver.getCurrentUrl(),"https://alerts.shotspotter.biz/", "Wrong URL on Login test");
 
-        LoginPage.emailField.sendKeys("denvert1@shotspotter.net");
+       /** LoginPage.emailField.sendKeys("denvert1@shotspotter.net");
         LoginPage.passwordField.sendKeys("Test123!");
         LoginPage.chkRemember.click();
-        LoginPage.GObutton.click();
+        LoginPage.GObutton.click();*/
+
+       loginPage.inputEmail("denvert1@shotspotter.net");
+       loginPage.inputPassword("Test123!");
+       loginPage.clickChkRemember();
+       loginPage.clickGObutton();
         try {
             sleep(7000);
         } catch (InterruptedException e) {
