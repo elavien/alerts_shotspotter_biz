@@ -21,4 +21,8 @@ public class MainPage {
     public boolean isPageLoaded(){
         return settingsIcon.isDisplayed();
     }
+
+
+
+
 }

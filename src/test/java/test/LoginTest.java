@@ -22,6 +22,7 @@ public class LoginTest {
       @BeforeMethod
     public void beforeMethod() {
         webDriver=new FirefoxDriver();
+          loginPage=new LoginPage(webDriver);
     }
 
     @AfterMethod
@@ -29,14 +30,29 @@ public class LoginTest {
          webDriver.quit();
     }
 
-    @Test
+    /**@Test
     public void testLoginPositive() {
-        loginPage=new LoginPage(webDriver);
+
         Assert.assertEquals(webDriver.getTitle(), "Shotspotter - Login", "Main page title is wrong");
         Assert.assertEquals(webDriver.getCurrentUrl(),"https://alerts.shotspotter.biz/", "Wrong URL on Login test");
         MainPage mainPage = loginPage.LoginAs("denvert1@shotspotter.net", "Test123!");
         Assert.assertEquals(webDriver.getTitle(), "Shotspotter");
         Assert.assertTrue(webDriver.getCurrentUrl().contains("https://alerts.shotspotter.biz/main"),"Wrong URL on Main page");
         Assert.assertTrue(mainPage.isPageLoaded(), "Settings icon is not displayed");
+    }*/
+    /**@Test
+    public void testLoginNegative(){
+        loginPage.getEmailField().sendKeys("aejhg;lhj@skh.com");
+        loginPage.getPasswordField().sendKeys("dafkjgh");
+        loginPage.getGObutton().click();
+        try {sleep(7000);} catch (InterruptedException e){e.printStackTrace();}
+        Assert.assertTrue(loginPage.isError(), "The provided credentials are not correct.");
+    }*/
+    @Test
+    public void NotLogin(){
+        MainPage mainPage = loginPage.LoginAs("denvert1@shotspotter.net", "Tesdsst123!");
+        Assert.assertFalse(mainPage.isPageLoaded());
+
+
     }
 }
