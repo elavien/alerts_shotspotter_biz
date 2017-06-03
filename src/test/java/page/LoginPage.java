@@ -15,27 +15,21 @@ import static java.lang.Thread.sleep;
  */
 
     public class LoginPage {
-    public LoginPage(WebDriver webDriver) {
+    private WebDriver webDriver;
+        public LoginPage(WebDriver webDriver) {
         PageFactory.initElements(webDriver, this);
         this.webDriver = webDriver;
         webDriver.navigate().to("https://alerts.shotspotter.biz");
-        try {
-            sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        try {sleep(5000);} catch (InterruptedException e) {e.printStackTrace();}
         }
-    }
-
-    private WebDriver webDriver;
-
-    @FindBy(xpath = "//input[@type='email']")
-    private WebElement emailField;
-
-    @FindBy(xpath = "//input[@type='password']")
-    private WebElement passwordField;
-
-    @FindBy(xpath = "//*[@class='button' and text()='GO']")
-    private WebElement GObutton;
+        @FindBy(xpath = "//input[@type='email']")
+        private WebElement emailField;
+        @FindBy(xpath = "//input[@type='password']")
+        private WebElement passwordField;
+        @FindBy(xpath = "//*[@class='button' and text()='GO']")
+        private WebElement GObutton;
+        @FindBy(className = "invalid-credentials")
+        private WebElement errorLogin;
 
     public WebElement getEmailField(){return emailField;}
     public WebElement getPasswordField(){return passwordField;}
@@ -45,22 +39,21 @@ import static java.lang.Thread.sleep;
         emailField.sendKeys(userEmail);
         passwordField.sendKeys(userPassword);
         GObutton.click();
-        try {
-            sleep(7000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        try {sleep(7000);} catch (InterruptedException e) {e.printStackTrace();}
         return new MainPage(webDriver);
     }
 
-    @FindBy(xpath = "//*[@class='invalid-credentials' and text()='The provided credentials are not correct.']")
-    private WebElement errorLogin;
+    public boolean isInvalidCredentialMsgDisplayed() {return errorLogin.isDisplayed();}
+    public String getErrorMsgText(){return errorLogin.getText();}
+    public boolean isPageLoaded(){return emailField.isDisplayed();}
 
-    public boolean isError() {
-        if (errorLogin.isDisplayed()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    public LoginPage LoginAsReturnToLogin(String userEmail, String userPassword){
+        emailField.sendKeys(userEmail);
+        passwordField.sendKeys(userPassword);
+        GObutton.click();
+        try {sleep(7000);} catch (InterruptedException e) {e.printStackTrace();}
+        return this;}
+
+    public String getPageURL(){return webDriver.getCurrentUrl();}
+    public String getPageTitle(){return webDriver.getTitle();}
 }

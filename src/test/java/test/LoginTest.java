@@ -30,28 +30,31 @@ public class LoginTest {
          webDriver.quit();
     }
 
-    /**@Test
+    @Test
     public void testLoginPositive() {
 
-        Assert.assertEquals(webDriver.getTitle(), "Shotspotter - Login", "Main page title is wrong");
-        Assert.assertEquals(webDriver.getCurrentUrl(),"https://alerts.shotspotter.biz/", "Wrong URL on Login test");
+        Assert.assertEquals(loginPage.getPageTitle(), "Shotspotter - Login", "Main page title is wrong");
+        Assert.assertEquals(loginPage.getPageURL(),"https://alerts.shotspotter.biz/", "Wrong URL on Login test");
         MainPage mainPage = loginPage.LoginAs("denvert1@shotspotter.net", "Test123!");
-        Assert.assertEquals(webDriver.getTitle(), "Shotspotter");
-        Assert.assertTrue(webDriver.getCurrentUrl().contains("https://alerts.shotspotter.biz/main"),"Wrong URL on Main page");
+        Assert.assertEquals(mainPage.getPageTitle(), "Shotspotter");
+        Assert.assertTrue(mainPage.getPageURL().contains("https://alerts.shotspotter.biz/main"),"Wrong URL on Main page");
         Assert.assertTrue(mainPage.isPageLoaded(), "Settings icon is not displayed");
-    }*/
+    }
     /**@Test
     public void testLoginNegative(){
         loginPage.getEmailField().sendKeys("aejhg;lhj@skh.com");
         loginPage.getPasswordField().sendKeys("dafkjgh");
         loginPage.getGObutton().click();
         try {sleep(7000);} catch (InterruptedException e){e.printStackTrace();}
-        Assert.assertTrue(loginPage.isError(), "The provided credentials are not correct.");
+        Assert.assertTrue(loginPage.isInvalidCredentialMsgDisplayed(), "The provided credentials are not correct.");
     }*/
     @Test
     public void NotLogin(){
-        MainPage mainPage = loginPage.LoginAs("denvert1@shotspotter.net", "Tesdsst123!");
-        Assert.assertFalse(mainPage.isPageLoaded());
+        String expextedError = "The provided credentials are not correct.";
+        loginPage = loginPage.LoginAsReturnToLogin("denvert1@shotspotter.net", "Tesdsst123!");
+        Assert.assertTrue(loginPage.isPageLoaded(), "Login page is not loaded");
+        Assert.assertTrue(loginPage.isInvalidCredentialMsgDisplayed(), "Error message was not displayed on login page");
+        Assert.assertEquals(loginPage.getErrorMsgText(), expextedError, "Error msg has wrong text");
 
 
     }
