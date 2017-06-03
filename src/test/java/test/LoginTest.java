@@ -19,10 +19,10 @@ public class LoginTest {
     public WebDriver webDriver;
     public LoginPage loginPage;
 
-      @BeforeMethod
+    @BeforeMethod
     public void beforeMethod() {
         webDriver=new FirefoxDriver();
-          loginPage=new LoginPage(webDriver);
+        loginPage=new LoginPage(webDriver);
     }
 
     @AfterMethod
@@ -32,7 +32,6 @@ public class LoginTest {
 
     @Test
     public void testLoginPositive() {
-
         Assert.assertEquals(loginPage.getPageTitle(), "Shotspotter - Login", "Main page title is wrong");
         Assert.assertEquals(loginPage.getPageURL(),"https://alerts.shotspotter.biz/", "Wrong URL on Login test");
         MainPage mainPage = loginPage.LoginAs("denvert1@shotspotter.net", "Test123!");
@@ -40,14 +39,14 @@ public class LoginTest {
         Assert.assertTrue(mainPage.getPageURL().contains("https://alerts.shotspotter.biz/main"),"Wrong URL on Main page");
         Assert.assertTrue(mainPage.isPageLoaded(), "Settings icon is not displayed");
     }
-    /**@Test
+    @Test
     public void testLoginNegative(){
         loginPage.getEmailField().sendKeys("aejhg;lhj@skh.com");
         loginPage.getPasswordField().sendKeys("dafkjgh");
         loginPage.getGObutton().click();
         try {sleep(7000);} catch (InterruptedException e){e.printStackTrace();}
         Assert.assertTrue(loginPage.isInvalidCredentialMsgDisplayed(), "The provided credentials are not correct.");
-    }*/
+    }
     @Test
     public void NotLogin(){
         String expextedError = "The provided credentials are not correct.";
@@ -55,7 +54,5 @@ public class LoginTest {
         Assert.assertTrue(loginPage.isPageLoaded(), "Login page is not loaded");
         Assert.assertTrue(loginPage.isInvalidCredentialMsgDisplayed(), "Error message was not displayed on login page");
         Assert.assertEquals(loginPage.getErrorMsgText(), expextedError, "Error msg has wrong text");
-
-
     }
 }

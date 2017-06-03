@@ -14,21 +14,22 @@ import static java.lang.Thread.sleep;
  * Created by QA on 27.05.2017.
  */
 
-    public class LoginPage {
-    private WebDriver webDriver;
-        public LoginPage(WebDriver webDriver) {
-        PageFactory.initElements(webDriver, this);
-        this.webDriver = webDriver;
+public class LoginPage extends BasePage{
+
+    public LoginPage(WebDriver webDriver) {
+            super(webDriver);
+            PageFactory.initElements(webDriver, this);
         webDriver.navigate().to("https://alerts.shotspotter.biz");
-        try {sleep(5000);} catch (InterruptedException e) {e.printStackTrace();}
-        }
-        @FindBy(xpath = "//input[@type='email']")
+
+        waitUnitElementDisplayed(GObutton, 5);
+    }
+    @FindBy(xpath = "//input[@type='email']")
         private WebElement emailField;
-        @FindBy(xpath = "//input[@type='password']")
+    @FindBy(xpath = "//input[@type='password']")
         private WebElement passwordField;
-        @FindBy(xpath = "//*[@class='button' and text()='GO']")
+    @FindBy(xpath = "//*[@class='button' and text()='GO']")
         private WebElement GObutton;
-        @FindBy(className = "invalid-credentials")
+    @FindBy(className = "invalid-credentials")
         private WebElement errorLogin;
 
     public WebElement getEmailField(){return emailField;}
@@ -54,6 +55,4 @@ import static java.lang.Thread.sleep;
         try {sleep(7000);} catch (InterruptedException e) {e.printStackTrace();}
         return this;}
 
-    public String getPageURL(){return webDriver.getCurrentUrl();}
-    public String getPageTitle(){return webDriver.getTitle();}
 }
