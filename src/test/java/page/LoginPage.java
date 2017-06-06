@@ -1,12 +1,9 @@
 package page;
 
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import test.LoginTest;
 
 import static java.lang.Thread.sleep;
 
@@ -36,23 +33,21 @@ public class LoginPage extends BasePage{
     public WebElement getPasswordField(){return passwordField;}
     public WebElement getGObutton(){return GObutton;}
 
+         protected BasePage basePage;
+
     public MainPage LoginAs(String userEmail, String userPassword) {
-        emailField.sendKeys(userEmail);
-        passwordField.sendKeys(userPassword);
-        GObutton.click();
-        try {sleep(7000);} catch (InterruptedException e) {e.printStackTrace();}
+        new BasePage(webDriver).LoginBase(userEmail, userPassword);
         return new MainPage(webDriver);
     }
+
+    public LoginPage LoginAsReturnToLogin(String userEmail, String userPassword){
+        new BasePage(webDriver).LoginBase(userEmail, userPassword);
+        return this;}
+
 
     public boolean isInvalidCredentialMsgDisplayed() {return errorLogin.isDisplayed();}
     public String getErrorMsgText(){return errorLogin.getText();}
     public boolean isPageLoaded(){return emailField.isDisplayed();}
 
-    public LoginPage LoginAsReturnToLogin(String userEmail, String userPassword){
-        emailField.sendKeys(userEmail);
-        passwordField.sendKeys(userPassword);
-        GObutton.click();
-        try {sleep(7000);} catch (InterruptedException e) {e.printStackTrace();}
-        return this;}
 
 }

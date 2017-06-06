@@ -21,4 +21,5 @@ public class MainPage extends BasePage {
 
     public boolean isPageLoaded(){return settingsIcon.isDisplayed();}
 
+
 }
