@@ -1,5 +1,6 @@
 package page;
 
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -24,15 +25,10 @@ public class BasePage {
         WebDriverWait wait= new WebDriverWait(webDriver, timeout);
         return wait.until(ExpectedConditions.visibilityOf(element));
     }
-    public void LoginBase(String userEmail, String userPassword) {
-       LoginPage loginBase = new LoginPage(webDriver);
-        loginBase.getEmailField().sendKeys(userEmail);
-        loginBase.getPasswordField().sendKeys(userPassword);
-        loginBase.getGObutton().click();
-        try {
-            sleep(7000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public boolean isElementExist(WebElement element){
+        try{element.isDisplayed();}
+        catch (NoSuchElementException e){return false;}
+        return true;
     }
+
 }

@@ -17,8 +17,9 @@ public class LoginPage extends BasePage{
             super(webDriver);
             PageFactory.initElements(webDriver, this);
         webDriver.navigate().to("https://alerts.shotspotter.biz");
+        /* waitUnitElementDisplayed(GObutton, 5);*/
 
-        waitUnitElementDisplayed(GObutton, 5);
+        try {sleep(7000);} catch (InterruptedException e){e.printStackTrace();}
     }
     @FindBy(xpath = "//input[@type='email']")
         private WebElement emailField;
@@ -33,17 +34,14 @@ public class LoginPage extends BasePage{
     public WebElement getPasswordField(){return passwordField;}
     public WebElement getGObutton(){return GObutton;}
 
-         protected BasePage basePage;
+    public <T> T login(String user, String pw){
+        emailField.sendKeys(user);
+        passwordField.sendKeys(pw);
+        GObutton.click();
+            if  (isElementExist(GObutton)){return (T) PageFactory.initElements(webDriver, LoginPage.class);}
+            else {return (T) PageFactory.initElements(webDriver, MainPage.class);}
 
-    public MainPage LoginAs(String userEmail, String userPassword) {
-        new BasePage(webDriver).LoginBase(userEmail, userPassword);
-        return new MainPage(webDriver);
     }
-
-    public LoginPage LoginAsReturnToLogin(String userEmail, String userPassword){
-        new BasePage(webDriver).LoginBase(userEmail, userPassword);
-        return this;}
-
 
     public boolean isInvalidCredentialMsgDisplayed() {return errorLogin.isDisplayed();}
     public String getErrorMsgText(){return errorLogin.getText();}
