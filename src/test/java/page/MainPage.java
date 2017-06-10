@@ -16,12 +16,18 @@ public class MainPage extends BasePage {
 
     @FindBy(className="settings")
     private WebElement settingsIcon;
+        @FindBy(xpath = "//settings-drop-down//li[text()='Logout']")
+    private WebElement logOutMenuItem;
 
     public MainPage(WebDriver webDriver){
         super(webDriver);
         PageFactory.initElements(webDriver, this);
-        try {sleep(7000);} catch (InterruptedException e){e.printStackTrace();}
-     /*waitUnitElementDisplayed(settingsIcon, 5);*/}
+        waitUnitElementDisplayed(settingsIcon);}
+
+    public LoginPage logOut(){
+        settingsIcon.click();
+        waitUnitElementDisplayed(logOutMenuItem).click();
+        return PageFactory.initElements(webDriver, LoginPage.class);}
 
     public boolean isPageLoaded(){return settingsIcon.isDisplayed();}
 
