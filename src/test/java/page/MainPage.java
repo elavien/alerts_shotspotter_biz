@@ -16,7 +16,7 @@ public class MainPage extends BasePage {
 
     @FindBy(className="settings")
     private WebElement settingsIcon;
-        @FindBy(xpath = "//settings-drop-down//li[text()='Logout']")
+    @FindBy(xpath = "//settings-drop-down//li[text()='Logout']")
     private WebElement logOutMenuItem;
 
     public MainPage(WebDriver webDriver){

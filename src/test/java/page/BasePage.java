@@ -24,7 +24,7 @@ public class BasePage {
 
     public WebElement waitUnitElementDisplayed(WebElement element, int timeout){
         WebDriverWait wait= new WebDriverWait(webDriver, timeout);
-        return wait.until(ExpectedConditions.visibilityOf(element));}
+        return wait.until(ExpectedConditions.elementToBeClickable(element));}
     public WebElement waitUnitElementDisplayed(WebElement element){
         return waitUnitElementDisplayed(element, 10);}
 
