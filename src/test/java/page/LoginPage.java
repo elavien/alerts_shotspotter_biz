@@ -11,10 +11,10 @@ import static java.lang.Thread.sleep;
  * Created by QA on 27.05.2017.
  */
 
-public class LoginPage extends BasePage{
+public class LoginPage extends BasePage <LoginPage>{
 
     public LoginPage(WebDriver webDriver) {
-            super(webDriver);
+            super(webDriver, LoginPage.class);
             PageFactory.initElements(webDriver, this);
           waitUnitElementDisplayed(GObutton);}
 

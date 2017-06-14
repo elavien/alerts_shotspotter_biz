@@ -12,7 +12,7 @@ import static java.lang.Thread.sleep;
 /**
  * Created by QA on 30.05.2017.
  */
-public class MainPage extends BasePage {
+public class MainPage extends BasePage <MainPage>{
 
     @FindBy(className="settings")
     private WebElement settingsIcon;
@@ -20,13 +20,13 @@ public class MainPage extends BasePage {
     private WebElement logOutMenuItem;
 
     public MainPage(WebDriver webDriver){
-        super(webDriver);
+        super(webDriver, MainPage.class);
         PageFactory.initElements(webDriver, this);
         waitUnitElementDisplayed(settingsIcon);}
 
     public LoginPage logOut(){
         settingsIcon.click();
-        waitUnitElementDisplayed(logOutMenuItem).click();
+       waitUnitElementClickable(logOutMenuItem, 5).click();
         return PageFactory.initElements(webDriver, LoginPage.class);}
 
     public boolean isPageLoaded(){return settingsIcon.isDisplayed();}

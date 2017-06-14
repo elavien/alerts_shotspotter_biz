@@ -14,17 +14,33 @@ import static java.lang.Thread.sleep;
 /**
  * Created by UI дизайн on 03.06.2017.
  */
-public class BasePage {
+public class BasePage <T>{
     public WebDriver webDriver;
 
-    public BasePage(WebDriver webDriver){this.webDriver=webDriver;}
+    public BasePage(WebDriver webDriver, Class<T> clazz){this.webDriver=webDriver;}
 
     public String getPageURL(){return webDriver.getCurrentUrl();}
+
+    /**
+     * Common method to get current Page title
+     *
+     * @return String with current Page title
+     */
     public String getPageTitle(){return webDriver.getTitle();}
 
-    public WebElement waitUnitElementDisplayed(WebElement element, int timeout){
+    /**
+     * Waits until element is clickable using specific max timeout.
+     *
+     * @param element Webelement to wait for
+     * @param timeout Max timeout in seconds
+     * @return WebElement after expected contition
+     */
+    public WebElement waitUnitElementClickable(WebElement element, int timeout){
         WebDriverWait wait= new WebDriverWait(webDriver, timeout);
         return wait.until(ExpectedConditions.elementToBeClickable(element));}
+    public WebElement waitUnitElementDisplayed(WebElement element, int timeout){
+        WebDriverWait wait= new WebDriverWait(webDriver, timeout);
+        return wait.until(ExpectedConditions.visibilityOf(element));}
     public WebElement waitUnitElementDisplayed(WebElement element){
         return waitUnitElementDisplayed(element, 10);}
 
