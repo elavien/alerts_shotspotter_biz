@@ -17,8 +17,19 @@ import static java.lang.Thread.sleep;
 public class BasePage <T>{
     public WebDriver webDriver;
 
+    /**
+     * Constructor for the initialization of wevDriver
+     *
+     * @param webDriver
+     * @param clazz
+     */
     public BasePage(WebDriver webDriver, Class<T> clazz){this.webDriver=webDriver;}
 
+    /**
+     * Current URL
+     *
+     * @return current string value as url adress from open page
+     */
     public String getPageURL(){return webDriver.getCurrentUrl();}
 
     /**
@@ -29,7 +40,7 @@ public class BasePage <T>{
     public String getPageTitle(){return webDriver.getTitle();}
 
     /**
-     * Waits until element is clickable using specific max timeout.
+     * Waits until the element is clickable using specific max timeout.
      *
      * @param element Webelement to wait for
      * @param timeout Max timeout in seconds
@@ -38,12 +49,34 @@ public class BasePage <T>{
     public WebElement waitUnitElementClickable(WebElement element, int timeout){
         WebDriverWait wait= new WebDriverWait(webDriver, timeout);
         return wait.until(ExpectedConditions.elementToBeClickable(element));}
+
+    /**
+     * Waiting for the element becomes visible at page of site using specific max timeout
+     *
+     * @param element Webelement to wait for
+     * @param timeout Max timeout in seconds
+     * @return WebElement after expected contition
+     */
     public WebElement waitUnitElementDisplayed(WebElement element, int timeout){
         WebDriverWait wait= new WebDriverWait(webDriver, timeout);
         return wait.until(ExpectedConditions.visibilityOf(element));}
+
+    /**
+     * Waiting for the web element of up to 10 seconds
+     *
+     * @param element Webelement to wait for
+     * @return Web item for up to 10 seconds
+     */
     public WebElement waitUnitElementDisplayed(WebElement element){
         return waitUnitElementDisplayed(element, 10);}
 
+    /**
+     * Waiting for true or false when searching for a locator of WebElement at page of site
+     *
+     * @param element Webelement to wait for
+     * @param timeout Max timeout in seconds
+     * @return True or False after waiting for locator of WebElement
+     */
     public boolean isElementDisplayed(WebElement element, int timeout){
         try{waitUnitElementDisplayed(element).isDisplayed();}
         catch (TimeoutException e){return false;}
