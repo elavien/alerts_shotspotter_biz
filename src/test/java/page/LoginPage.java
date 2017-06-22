@@ -11,7 +11,7 @@ import static java.lang.Thread.sleep;
  * Created by QA on 27.05.2017.
  */
 
-public class LoginPage extends BasePage <LoginPage>{
+public class LoginPage extends BasePage {
 
     /**
      * Constructor for the initialization of wevDriver
@@ -19,7 +19,7 @@ public class LoginPage extends BasePage <LoginPage>{
      * @param webDriver It's object of WebDriver
      */
     public LoginPage(WebDriver webDriver) {
-            super(webDriver, LoginPage.class);
+            super(webDriver);
             PageFactory.initElements(webDriver, this);
           waitUnitElementDisplayed(GObutton);}
 
@@ -65,7 +65,7 @@ public class LoginPage extends BasePage <LoginPage>{
 
 
     /**
-     * Авторизация на сайте
+     * To login to site
      *
      * @param user Formal parameter of type String (for e-mail)
      * @param pw Formal parameter of type String (for password)

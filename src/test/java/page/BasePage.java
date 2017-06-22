@@ -14,16 +14,15 @@ import static java.lang.Thread.sleep;
 /**
  * Created by UI дизайн on 03.06.2017.
  */
-public class BasePage <T>{
+public class BasePage {
     public WebDriver webDriver;
 
     /**
      * Constructor for the initialization of wevDriver
      *
-     * @param webDriver
-     * @param clazz
+     * @param webDriver instance
      */
-    public BasePage(WebDriver webDriver, Class<T> clazz){this.webDriver=webDriver;}
+    public BasePage(WebDriver webDriver){this.webDriver=webDriver;}
 
     /**
      * Current URL
