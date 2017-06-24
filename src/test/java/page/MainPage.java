@@ -4,10 +4,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 
-import static java.lang.Thread.sleep;
 
 
 /**
@@ -23,12 +23,29 @@ public class MainPage extends BasePage {
     private WebElement settingsMenu;
     @FindBy(xpath = "//filter-menu//div[@class='selected-option']")
     private WebElement incidentsTimeSwitch;
-    @FindBy(xpath = "//filter-menu//div[@class='available-options']//*[@class='time-increment' and text()='24']")
+    /**@FindBy(xpath = "//filter-menu//div[@class='available-options']//*[@class='time-increment' and text()='24']")
     private WebElement timeFrameSwitch24h;
     @FindBy(xpath = "//filter-menu//div[@class='available-options']//*[@class='time-increment' and text()='3']")
     private WebElement timeFrameSwitch3d;
     @FindBy(xpath = "//filter-menu//div[@class='available-options']//*[@class='time-increment' and text()='7']")
-    private WebElement timeFrameSwitch7d;
+    private WebElement timeFrameSwitch7d;*/
+
+    @FindBy(xpath = "//filter-menu//div[@class='available-options']//*[@class='time-increment' and text()]")
+    private WebElement timeFrameSwitch;
+
+    public void selectFrame(String text) throws InterruptedException {
+        timeFrameSwitch.click();
+        Select select = new Select(timeFrameSwitch);
+        wait(5);
+        select.selectByVisibleText(text);
+    timeFrameSwitch.submit();
+
+        return ;
+    }
+
+
+
+
     @FindBy(xpath = "//*[@class='result-count']")
     private WebElement resultsCount;
     @FindBy(xpath = "//div//*[text()='List']")
@@ -39,7 +56,9 @@ public class MainPage extends BasePage {
     public MainPage(WebDriver webDriver){
         super(webDriver);
         PageFactory.initElements(webDriver, this);
-        waitUnitElementDisplayed(settingsIcon);}
+        waitUnitElementDisplayed(settingsIcon);
+
+    }
 
     public LoginPage logOut(){
         settingsIcon.click();
