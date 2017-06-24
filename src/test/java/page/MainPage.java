@@ -36,8 +36,7 @@ public class MainPage extends BasePage {
     public void selectFrame(String text) throws InterruptedException {
         timeFrameSwitch.click();
         Select select = new Select(timeFrameSwitch);
-        wait(5);
-        select.selectByVisibleText(text);
+                select.selectByVisibleText(text);
     timeFrameSwitch.submit();
 
         return ;
