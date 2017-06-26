@@ -21,8 +21,8 @@ import static java.lang.Thread.sleep;
 public class LoginTest {
     public WebDriver webDriver;
     public LoginPage loginPage;
-    public String username="sst.tau@gmail.com";
-    public String password="P@ssword123";
+    public String username="denvert1@shotspotter.net";
+    public String password="Test123!";
 
     @BeforeMethod
     public void beforeMethod() {

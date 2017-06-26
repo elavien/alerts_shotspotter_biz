@@ -4,9 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import page.LoginPage;
 import page.MainPage;
 
@@ -17,32 +15,53 @@ import static java.lang.Thread.sleep;
  */
 public class MainPageTest {
     public WebDriver webDriver;
+    MainPage mainPage;
     public String username = "denvert1@shotspotter.net";
     public String password = "Test123!";
 
-    @BeforeMethod
-    public void beforeMethod() throws InterruptedException {
+    @BeforeClass
+    public void beforeClass() throws InterruptedException {
         webDriver = new FirefoxDriver();
         webDriver.navigate().to("https://alerts.shotspotter.biz");
+        LoginPage loginPage = new LoginPage(webDriver);
+        mainPage = loginPage.login(username, password);
     }
-    @AfterMethod
-    public void afterMethod() {
+    @AfterClass
+    public void afterClass() {
         webDriver.quit();
     }
+
     @Test
-    public void testSwitchIncidentsPeriod() throws InterruptedException {
-        LoginPage loginPage = new LoginPage(webDriver);
-        MainPage mainPage = loginPage.login(username, password);
+    public void testSwitchIncidentsPeriod() {
 
-        mainPage.selectFrame("7");
+        int[] timeFrameOptions = {24,3,7};
+        for(int timeFrameOption : timeFrameOptions){
+            mainPage.switchTimeFramePeriod(timeFrameOption);
+            int resultsCount = mainPage.getResultsCount();
+            int incidentCardsCount = mainPage.getIncidentCardsCount();
 
+            System.out.println("Preriod: "+timeFrameOption);
+            System.out.println("resultsCount: "+resultsCount);
+            System.out.println("incidentCardsCount: "+incidentCardsCount);
+            Assert.assertEquals(resultsCount, incidentCardsCount, "Results count doesn't match Incident Cards count");
+        }
+    }
 
-       /** mainPage.switchTimeFramePeriod(7);     //home work
+    @DataProvider
+    public static Object[][] timeFrameOptions(){
+        return new Object[][]{ {24},{3},{7}};
+    }
+
+    @Test(dataProvider = "timeFrameOptions")
+    public void testSwitchIncidentsPeriodByDataProvider(int timeFrameOption) {
+        mainPage.switchTimeFramePeriod(timeFrameOption);
         int resultsCount = mainPage.getResultsCount();
-        int incidentCardsCount = mainPage.getIncidentCardsCount();   //home work
+        int incidentCardsCount = mainPage.getIncidentCardsCount();
 
-        Assert.assertEquals(resultsCount, incidentCardsCount, "Results count doesn't match Incident Cards count");*/
-
+        System.out.println("Period: "+timeFrameOption);
+        System.out.println("resultsCount: "+resultsCount);
+        System.out.println("incidentCardsCount: "+incidentCardsCount);
+        Assert.assertEquals(resultsCount, incidentCardsCount, "Results count doesn't match Incident Cards count");
 
     }
 }
