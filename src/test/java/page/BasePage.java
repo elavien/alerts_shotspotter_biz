@@ -15,7 +15,7 @@ import static java.lang.Thread.sleep;
  * Created by UI дизайн on 03.06.2017.
  */
 public class BasePage {
-    public WebDriver webDriver;
+    protected WebDriver webDriver;
 
     /**
      * Constructor for the initialization of wevDriver
@@ -77,7 +77,7 @@ public class BasePage {
      * @return True or False after waiting for locator of WebElement
      */
     public boolean isElementDisplayed(WebElement element, int timeout){
-        try{waitUnitElementDisplayed(element).isDisplayed();}
+        try{waitUnitElementDisplayed(element, 7).isDisplayed();}
         catch (TimeoutException e){return false;}
         return true;}
 

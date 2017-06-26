@@ -21,7 +21,7 @@ public class LoginPage extends BasePage {
     public LoginPage(WebDriver webDriver) {
             super(webDriver);
             PageFactory.initElements(webDriver, this);
-          waitUnitElementDisplayed(GObutton);}
+          waitUnitElementDisplayed(GObutton, 7);}
 
     /**
      * Locator of "E-mail" field at the page of site
@@ -69,14 +69,14 @@ public class LoginPage extends BasePage {
      *
      * @param user Formal parameter of type String (for e-mail)
      * @param pw Formal parameter of type String (for password)
-     * @param <T>
+     * @param <T> unknown Page Object type (LoginPage/MainPage)
      * @return Либо страницу авторизации либо, если не находит элемент кнопки GO, - заходит на сайт
      */
     public <T> T login(String user, String pw){
         emailField.sendKeys(user);
         passwordField.sendKeys(pw);
         GObutton.click();
-            if  (isElementDisplayed(GObutton, 3)) {return (T) this;}
+            if  (isElementDisplayed(GObutton, 7)) {return (T) this;}
             else {return (T) PageFactory.initElements(webDriver, MainPage.class);}}
 
 
