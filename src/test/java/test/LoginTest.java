@@ -11,6 +11,7 @@ import page.BasePage;
 import page.LoginPage;
 import page.MainPage;
 
+
 import java.util.prefs.BackingStoreException;
 
 import static java.lang.Thread.sleep;
@@ -64,4 +65,6 @@ public class LoginTest {
         Assert.assertEquals(loginPage.getPageTitle(), "Shotspotter - Login", "Main page title is wrong");
         Assert.assertEquals(loginPage.getPageURL(), "https://alerts.shotspotter.biz/", "Wrong URL on Login test");
     }
+
+
 }

@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 
 import static java.lang.Thread.sleep;
 
@@ -85,6 +86,13 @@ public class LoginPage extends BasePage {
     public String getErrorMsgText(){return errorLogin.getText();}
 
     public boolean isPageLoaded(){return emailField.isDisplayed();}
+
+    public void assertsForNegativeTests(){
+        String expextedError = "The provided credentials are not correct.";
+        Assert.assertTrue(isPageLoaded(), "Login page is not loaded");
+        Assert.assertTrue(isInvalidCredentialMsgDisplayed(), "Error message was not displayed on login page");
+        Assert.assertEquals(getErrorMsgText(), expextedError, "Error msg has wrong text");
+    }
 
 
 }
