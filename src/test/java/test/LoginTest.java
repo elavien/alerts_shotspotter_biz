@@ -1,13 +1,9 @@
 package test;
 
-import net.sourceforge.htmlunit.corejs.javascript.tools.shell.Global;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
-import page.BasePage;
 import page.LoginPage;
 import page.MainPage;
 
@@ -65,6 +61,35 @@ public class LoginTest {
         Assert.assertEquals(loginPage.getPageTitle(), "Shotspotter - Login", "Main page title is wrong");
         Assert.assertEquals(loginPage.getPageURL(), "https://alerts.shotspotter.biz/", "Wrong URL on Login test");
     }
+    @DataProvider
+    public static Object[][] falseLoginEmail() {
+        return new Object[][]{
+                {"", "P@ssword123", "The provided credentials are not correct."},
+                {"24sst.tau@gmailcom", "P@ssword123", "The provided credentials are not correct."},
+                {"24sst.taugmail.com", "P@ssword123", "The provided credentials are not correct."},
+                {"24 sst.tau@gmail.com", "P@ssword123", "The provided credentials are not correct."},
+                {"24sst.tau@gmai l.com", "P@ssword123", "The provided credentials are not correct."},
+                {"@gmail.com", "P@ssword123", "The provided credentials are not correct."},
+                {"24sst.tau@", "P@ssword123", "The provided credentials are not correct."},
+                {"24sst.tau@@gmail.com", "P@ssword123", "The provided credentials are not correct."},
+                {"24sst.tau@gmail.com", "", "The provided credentials are not correct."},
+                {"24sst.tau@gmail.com", "P@ssword", "The provided credentials are not correct."},
+                {"", "", "The provided credentials are not correct."}};
+    }
 
+    @Test(dataProvider = "falseLoginEmail")
+    public void testLoginNegativDataProvider(String Email, String Password, String Errormsg) {
+        LoginPage loginPage = new LoginPage(webDriver);
+
+        Assert.assertEquals(loginPage.getPageTitle(), "Shotspotter - Login", "Login page title is wrong");
+        Assert.assertEquals(loginPage.getPageURL(), "https://alerts.shotspotter.biz/", "Login URL on Login page");
+
+        loginPage.login(Email, Password);
+        loginPage.isPageLoaded();
+
+        Assert.assertEquals(loginPage.getPageURL(), "https://alerts.shotspotter.biz/", "Login URL on Login page");
+        Assert.assertTrue(loginPage.isPageLoaded(), "LoginPage is not loaded");
+        Assert.assertTrue(loginPage.invalidCredentialsMsgDisplayed(),"Error messege was not displayd on LoginPage");
+        Assert.assertEquals(loginPage.getErrormsgText(), Errormsg, "Invalid Text not correct");}
 
 }

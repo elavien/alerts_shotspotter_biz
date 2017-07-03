@@ -43,7 +43,7 @@ public class LoginPage extends BasePage {
      * Locator of error message at the page of site
      */
     @FindBy(className = "invalid-credentials")
-        private WebElement errorLogin;
+        private WebElement invalidCredentialsErrorMsg;
 
     /**
      * Getter of a private element
@@ -81,17 +81,23 @@ public class LoginPage extends BasePage {
             else {return (T) PageFactory.initElements(webDriver, MainPage.class);}}
 
 
-    public boolean isInvalidCredentialMsgDisplayed() {return errorLogin.isDisplayed();}
+    public boolean isInvalidCredentialMsgDisplayed() {return invalidCredentialsErrorMsg.isDisplayed();}
 
-    public String getErrorMsgText(){return errorLogin.getText();}
+    public String getErrorMsgText(){return invalidCredentialsErrorMsg.getText();}
 
     public boolean isPageLoaded(){return emailField.isDisplayed();}
 
-    public void assertsForNegativeTests(){
-        String expextedError = "The provided credentials are not correct.";
-        Assert.assertTrue(isPageLoaded(), "Login page is not loaded");
-        Assert.assertTrue(isInvalidCredentialMsgDisplayed(), "Error message was not displayed on login page");
-        Assert.assertEquals(getErrorMsgText(), expextedError, "Error msg has wrong text");
+    public boolean invalidCredentialsMsgDisplayed() {
+        return invalidCredentialsErrorMsg.isDisplayed();
+    }
+
+    /**
+     *Common method to get Error Text when write wrong email or password
+     *
+     * @return Error Text when write wrong email or password
+     */
+    public String getErrormsgText() {
+        return invalidCredentialsErrorMsg.getText();
     }
 
 
