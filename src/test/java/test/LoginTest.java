@@ -27,7 +27,7 @@ public class LoginTest {
         if (browser.equalsIgnoreCase("firefox")) {
             webDriver = new FirefoxDriver();
         } else if (browser.equalsIgnoreCase("chrome")) {
-            System.setProperty("webdriver.chrome.driver", "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
+            System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe");
             webDriver = new ChromeDriver();
         }else {
             throw new IllegalArgumentException("The Browser Type is Undefined");}

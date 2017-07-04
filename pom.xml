@@ -16,10 +16,8 @@
                 <version>2.20</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>testng.xml</suiteXmlFile>
+                        <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
                     </suiteXmlFiles>
-                    <parallel>tests</parallel>
-                    <threadCount>3</threadCount>
                 </configuration>
             </plugin>
         </plugins>
