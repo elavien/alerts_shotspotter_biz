@@ -1,16 +1,14 @@
 package test;
 
+import com.gargoylesoftware.htmlunit.BrowserVersion;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import page.LoginPage;
 import page.MainPage;
 
-
-import java.util.prefs.BackingStoreException;
-
-import static java.lang.Thread.sleep;
 
 /**
  * Created by Java Script on 20.05.2017.
@@ -20,12 +18,20 @@ public class LoginTest {
     public LoginPage loginPage;
     public String username="denvert1@shotspotter.net";
     public String password="Test123!";
+    BrowserVersion browser;
 
+    @Parameters("browser")
     @BeforeMethod
-    public void beforeMethod() {
-        webDriver = new FirefoxDriver();
-        webDriver.navigate().to("https://alerts.shotspotter.biz");
-        loginPage = new LoginPage(webDriver); }
+    public void beforeMethod(String browser) {
+        loginPage = new LoginPage(webDriver);
+        if (browser.equalsIgnoreCase("firefox")) {
+            webDriver = new FirefoxDriver();
+        } else if (browser.equalsIgnoreCase("chrome")) {
+            System.setProperty("webdriver.chrome.driver", "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
+            webDriver = new ChromeDriver();
+        }else {
+            throw new IllegalArgumentException("The Browser Type is Undefined");}
+        webDriver.navigate().to("https://alerts.shotspotter.biz");}
 
     @AfterMethod
     public void beforeClass() {

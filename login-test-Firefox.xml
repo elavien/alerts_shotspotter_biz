@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="test.crossbrawser" parallel="tests">
+    <parameter name="browser" value="firefox" />
+
+    <test name="FirefoxTest">
+        <classes>
+            <class name="test.LoginTest" />
+            </classes>
+    </test>
+</suite>
