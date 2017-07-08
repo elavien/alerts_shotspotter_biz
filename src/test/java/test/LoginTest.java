@@ -20,10 +20,11 @@ public class LoginTest {
     public String password="Test123!";
     BrowserVersion browser;
 
+
     @Parameters("browser")
     @BeforeMethod
     public void beforeMethod(String browser) {
-        loginPage = new LoginPage(webDriver);
+
         if (browser.equalsIgnoreCase("firefox")) {
             webDriver = new FirefoxDriver();
         } else if (browser.equalsIgnoreCase("chrome")) {
@@ -40,6 +41,7 @@ public class LoginTest {
 
     @Test
     public void testLoginPositive() {
+        loginPage = new LoginPage(webDriver);
         Assert.assertEquals(loginPage.getPageTitle(), "Shotspotter - Login", "Main page title is wrong");
         Assert.assertEquals(loginPage.getPageURL(), "https://alerts.shotspotter.biz/", "Wrong URL on Login test");
         MainPage mainPage = loginPage.login(username, password);
@@ -49,6 +51,7 @@ public class LoginTest {
     }
     @Test
     public void testLoginNegative(){
+        loginPage = new LoginPage(webDriver);
         String expextedError = "The provided credentials are not correct.";
         loginPage = loginPage.login("esgtr@gh.ss", "Tes3!");
         Assert.assertTrue(loginPage.isPageLoaded(), "Login page is not loaded");
