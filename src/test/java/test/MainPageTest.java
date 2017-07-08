@@ -22,7 +22,7 @@ public class MainPageTest {
 
     @Parameters("browser")
     @BeforeMethod
-    public void beforeMethod(String browser) {
+    public void beforeMethod(@Optional ("firefox") String browser) {
 
         if (browser.equalsIgnoreCase("firefox")) {
             webDriver = new FirefoxDriver();
