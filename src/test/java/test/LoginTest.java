@@ -1,6 +1,10 @@
 package test;
 
+
 import com.gargoylesoftware.htmlunit.BrowserVersion;
+
+import io.github.bonigarcia.wdm.ChromeDriverManager;
+import io.github.bonigarcia.wdm.FirefoxDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -20,23 +24,33 @@ public class LoginTest {
     public String password="Test123!";
     BrowserVersion browser;
 
+    @BeforeClass
+    public static void setupClass() {
+        ChromeDriverManager.getInstance().setup();
+        FirefoxDriverManager.getInstance().setup();
+        System.setProperty("webdriver.chrome.driver", "src/recources/chromedriver.exe");
+        System.setProperty("webdriver.gecko.driver", "src/recources/geckodriver.exe");
+    }
 
     @Parameters("browser")
-    @BeforeMethod
+    @BeforeTest
     public void beforeMethod(@Optional ("firefox") String browser) {
+
 
         if (browser.equalsIgnoreCase("firefox")) {
             webDriver = new FirefoxDriver();
         } else if (browser.equalsIgnoreCase("chrome")) {
-            System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe");
+
             webDriver = new ChromeDriver();
         }else {
             throw new IllegalArgumentException("The Browser Type is Undefined");}
         webDriver.navigate().to("https://alerts.shotspotter.biz");}
 
-    @AfterMethod
-    public void beforeClass() {
-        webDriver.quit();
+    @AfterTest
+    public void teardown() {
+        if (webDriver != null) {
+            webDriver.quit();
+        }
     }
 
     @Test
