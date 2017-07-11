@@ -1,6 +1,8 @@
 package test;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
+import io.github.bonigarcia.wdm.ChromeDriverManager;
+import io.github.bonigarcia.wdm.FirefoxDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -23,21 +25,22 @@ public class MainPageTest {
     @Parameters("browser")
     @BeforeMethod
     public void beforeMethod(@Optional ("firefox") String browser) {
-
         if (browser.equalsIgnoreCase("firefox")) {
+            FirefoxDriverManager.getInstance().setup();
             webDriver = new FirefoxDriver();
-        } else if (browser.equalsIgnoreCase("chrome")) {
-            System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe");
-            webDriver = new ChromeDriver();
+        } else  if (browser.equalsIgnoreCase("chrome")) {
+        ChromeDriverManager.getInstance().setup();
+        webDriver = new ChromeDriver();
         }else {
             throw new IllegalArgumentException("The Browser Type is Undefined");}
         webDriver.navigate().to("https://alerts.shotspotter.biz");}
 
     @AfterMethod
-    public void beforeClass() {
-        webDriver.quit();
+    public void afterMethod() {
+        if (webDriver != null) {
+            webDriver.quit();
+        }
     }
-
     @Test
     public void testSwitchIncidentsPeriod() throws InterruptedException {
         LoginPage loginPage = new LoginPage(webDriver);

@@ -24,30 +24,21 @@ public class LoginTest {
     public String password="Test123!";
     BrowserVersion browser;
 
-    @BeforeClass
-    public static void setupClass() {
-        ChromeDriverManager.getInstance().setup();
-        FirefoxDriverManager.getInstance().setup();
-        System.setProperty("webdriver.chrome.driver", "src/recources/chromedriver.exe");
-        System.setProperty("webdriver.gecko.driver", "src/recources/geckodriver.exe");
-    }
-
     @Parameters("browser")
-    @BeforeTest
+    @BeforeMethod
     public void beforeMethod(@Optional ("firefox") String browser) {
-
-
         if (browser.equalsIgnoreCase("firefox")) {
+            FirefoxDriverManager.getInstance().setup();
             webDriver = new FirefoxDriver();
-        } else if (browser.equalsIgnoreCase("chrome")) {
-
+        } else  if (browser.equalsIgnoreCase("chrome")) {
+            ChromeDriverManager.getInstance().setup();
             webDriver = new ChromeDriver();
         }else {
             throw new IllegalArgumentException("The Browser Type is Undefined");}
         webDriver.navigate().to("https://alerts.shotspotter.biz");}
 
-    @AfterTest
-    public void teardown() {
+    @AfterMethod
+    public void afterMethod() {
         if (webDriver != null) {
             webDriver.quit();
         }
