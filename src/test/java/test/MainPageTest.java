@@ -45,9 +45,9 @@ public class MainPageTest {
     public void testSwitchIncidentsPeriod() throws InterruptedException {
         LoginPage loginPage = new LoginPage(webDriver);
         mainPage = loginPage.login(Email, Password);
-        int[] timeFrameOptions = {24, 3, 7};// списое элементов
+        int[] timeFrameOptions = {24, 3, 7};
 
-        for (int timeFrameOption : timeFrameOptions) {// инициализация еще одной переменной, которая является по очереди каждой переменной из списка
+        for (int timeFrameOption : timeFrameOptions) {
 
             mainPage.switchTimeFramePeriod(timeFrameOption);
             int resultsCount = mainPage.getResultsCount();
