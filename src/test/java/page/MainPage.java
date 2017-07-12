@@ -98,7 +98,7 @@ public class MainPage extends BasePage {
     public void switchTimeFramePeriod(int period) {
         incidentsTimeSwitch.click();
         getTimeFramePeriodOption(period).click();
-        waitResultCountUpdated(10);
+        waitResultCountUpdated(15);
     }
 
     public void waitResultCountUpdated(int maxTimeoutSec) {
