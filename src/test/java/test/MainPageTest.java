@@ -10,6 +10,9 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 import page.LoginPage;
 import page.MainPage;
+
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.containsString;
 
 
@@ -82,14 +85,31 @@ public class MainPageTest {
 
         Assert.assertEquals(resultsCount, incidentCardsCount, "Results count doesn't match Incident Cards count");
 
-        Assert.assertTrue(mainPage.getTextDenver().contains("Denver"));
-        Assert.assertNotNull(mainPage.getTextTime(), null);
-        Assert.assertNotNull(mainPage.getTextAddress(), null);
-        Assert.assertFalse(Boolean.parseBoolean(mainPage.getTextTime()), "");
-        Assert.assertFalse(Boolean.parseBoolean(mainPage.getTextAddress()), "");
     }
 
+    @Test
+    public void testValidateIncidentCardFields() {
+        String expectedCity = "Denver";
+        LoginPage loginPage = new LoginPage(webDriver);
+        mainPage = loginPage.login(Email, Password);
+        mainPage.openIncidentsList();
+        List<String> listCities = mainPage.getIncidentCardsCities();
+        List<String> listStreets = mainPage.getIncidentCardsStreets();
+        List<String> listTimeStamps = mainPage.getIncidentCardsTimeStamps();
+        for (String elementCity : listCities) {
+            Assert.assertEquals(elementCity, expectedCity, "City is not Denver");
+        }
+        for (String elementStreet : listStreets) {
+            Assert.assertNotEquals(elementStreet, "", "Street address is empty");
+        }
+        for (String elementTimeStampt : listTimeStamps) {
+            Assert.assertNotEquals(elementTimeStampt, "", "Street address is empty");
+        }
+    }
 
-
-
+    @Test
+    public  void KLMN(){
+        LoginPage loginPage = new LoginPage(webDriver);
+        mainPage = loginPage.login(Email, Password);
+    }
 }
