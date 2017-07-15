@@ -10,6 +10,7 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 import page.LoginPage;
 import page.MainPage;
+import static org.hamcrest.CoreMatchers.containsString;
 
 
 /**
@@ -18,6 +19,7 @@ import page.MainPage;
 public class MainPageTest {
     public WebDriver webDriver;
     MainPage mainPage;
+    public LoginPage loginPage;
     public String Email = "denvert1@shotspotter.net";
     public String Password = "Test123!";
     BrowserVersion browser;
@@ -32,7 +34,7 @@ public class MainPageTest {
         ChromeDriverManager.getInstance().setup();
         webDriver = new ChromeDriver();
         }else {
-            throw new IllegalArgumentException("The Browser Type is Undefined");}
+           throw new IllegalArgumentException("The Browser Type is Undefined");}
         webDriver.navigate().to("https://alerts.shotspotter.biz");}
 
     @AfterMethod
@@ -79,5 +81,15 @@ public class MainPageTest {
         System.out.println("incidentCardsCount: " + incidentCardsCount);
 
         Assert.assertEquals(resultsCount, incidentCardsCount, "Results count doesn't match Incident Cards count");
+
+        Assert.assertTrue(mainPage.getTextDenver().contains("Denver"));
+        Assert.assertNotNull(mainPage.getTextTime(), null);
+        Assert.assertNotNull(mainPage.getTextAddress(), null);
+        Assert.assertFalse(Boolean.parseBoolean(mainPage.getTextTime()), "");
+        Assert.assertFalse(Boolean.parseBoolean(mainPage.getTextAddress()), "");
     }
+
+
+
+
 }

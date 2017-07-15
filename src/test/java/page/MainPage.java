@@ -38,6 +38,10 @@ public class MainPage extends BasePage {
     @FindBy(xpath = "//incident-list//incident-card")
     private List<WebElement> incidentsList;
 
+
+    public String getTextDenver(){
+       return webDriver.findElement(By.xpath("//*[@class='city S' and text()]")).getText();
+    }
     /**
      * @param period
      * @return
@@ -45,6 +49,8 @@ public class MainPage extends BasePage {
     private WebElement getTimeFramePeriodOption(int period) {
         return webDriver.findElement(By.xpath(String.format("//filter-menu//div[@class='available-options']//*[@class='time-increment' and text()='%d']", period)));
     }
+
+
 
     /**
      * Numeric from RESULTS
@@ -125,4 +131,14 @@ public class MainPage extends BasePage {
         listButton.click();
         return incidentsList.size();
     }
+
+
+    public String getTextTime(){
+        return webDriver.findElement(By.className("content")).getText();
+    }
+    public String getTextAddress(){
+        return webDriver.findElement(By.className("address")).getText();
+    }
+
+
 }
