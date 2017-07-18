@@ -20,7 +20,7 @@ public class LoginPage extends BasePage {
     public LoginPage(WebDriver webDriver) {
             super(webDriver);
             PageFactory.initElements(webDriver, this);
-          waitUnitElementDisplayed(GObutton, 7);}
+          waitUnitElementDisplayed(GObutton, 12);}
 
     /**
      * Locator of "E-mail" field at the page of site

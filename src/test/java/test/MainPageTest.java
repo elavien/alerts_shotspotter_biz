@@ -30,14 +30,14 @@ public class MainPageTest {
     @Parameters("browser")
     @BeforeMethod
     public void beforeMethod(@Optional ("firefox") String browser) {
-        if (browser.equalsIgnoreCase("firefox")) {
+        /*if (browser.equalsIgnoreCase("firefox")) {
             FirefoxDriverManager.getInstance().setup();
             webDriver = new FirefoxDriver();
-        } else  if (browser.equalsIgnoreCase("chrome")) {
+        } else  if (browser.equalsIgnoreCase("chrome")) {*/
         ChromeDriverManager.getInstance().setup();
         webDriver = new ChromeDriver();
-        }else {
-           throw new IllegalArgumentException("The Browser Type is Undefined");}
+        /*}else {
+           throw new IllegalArgumentException("The Browser Type is Undefined");}*/
         webDriver.navigate().to("https://alerts.shotspotter.biz");}
 
     @AfterMethod
@@ -92,6 +92,8 @@ public class MainPageTest {
         String expectedCity = "Denver";
         LoginPage loginPage = new LoginPage(webDriver);
         mainPage = loginPage.login(Email, Password);
+        mainPage.switchTimeFramePeriod(7);
+
         mainPage.openIncidentsList();
         List<String> listCities = mainPage.getIncidentCardsCities();
         List<String> listStreets = mainPage.getIncidentCardsStreets();
@@ -105,11 +107,8 @@ public class MainPageTest {
         for (String elementTimeStampt : listTimeStamps) {
             Assert.assertNotEquals(elementTimeStampt, "", "Street address is empty");
         }
+
+
     }
 
-    @Test
-    public  void KLMN(){
-        LoginPage loginPage = new LoginPage(webDriver);
-        mainPage = loginPage.login(Email, Password);
-    }
 }

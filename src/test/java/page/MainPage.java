@@ -1,11 +1,12 @@
 package page;
 
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import sun.awt.image.ImageWatched;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,13 +43,13 @@ public class MainPage extends BasePage {
     private WebElement listButton;
     @FindBy(xpath = "//incident-list//incident-card")
     private List<WebElement> incidentsList;
-    @FindBy(xpath="//*[@class='btn btn-primary']")
-    private  WebElement buttonClose;
-    @FindBy (linkText = "terms of service")
+    @FindBy(xpath = "//*[@class='btn btn-primary']")
+    private WebElement buttonClose;
+    @FindBy(linkText = "terms of service")
     private WebElement linkTermsOfService;
 
 
-       /**
+    /**
      * @param period
      * @return
      */
@@ -101,6 +102,7 @@ public class MainPage extends BasePage {
         return settingIcon.isDisplayed();
     }
 
+
     /**
      * Choose days in timeFrameSwitch
      *
@@ -139,38 +141,52 @@ public class MainPage extends BasePage {
 
     public void openIncidentsList() {
         listButton.click();
-        waitUnitElementClickable(incidentsList.get(1), 5);
+        waitUnitElementClickable(incidentsList.get(1), 10);
     }
 
     public List<String> getIncidentCardsCities() {
         List<String> listCities = new ArrayList<String>();
-        for (WebElement incidentCard : incidentsList) {String cityText = incidentCard.findElement(By.xpath("//div[@class='city S']")).getText();
-        listCities.add(cityText);}
+        for (WebElement incidentCard : incidentsList) {
+            String cityText = incidentCard.findElement(By.xpath("//div[@class='city S']")).getText();
+            listCities.add(cityText);
+        }
         return listCities;
     }
 
     public List<String> getIncidentCardsStreets() {
         List<String> listStreets = new ArrayList<String>();
-        for (WebElement incidentCard : incidentsList) {String streetText = incidentCard.findElement(By.xpath("//div[@class='address']")).getText();
-            listStreets.add(streetText);}
+        for (WebElement incidentCard : incidentsList) {
+            String streetText = incidentCard.findElement(By.xpath("//div[@class='address']")).getText();
+            listStreets.add(streetText);
+        }
         return listStreets;
     }
 
+
     public List<String> getIncidentCardsTimeStamps() {
         List<String> listTimeStamps = new ArrayList<String>();
-        for (WebElement incidentCard : incidentsList) {String timeStampsText = incidentCard.findElement(By.xpath("//div[@class='cell day']/div[@class='content']")).getText();
-            listTimeStamps.add(timeStampsText);}
+        for (WebElement incidentCard : incidentsList) {
+            String timeStampsText = incidentCard.findElement(By.xpath("//div[@class='cell day']/div[@class='content']")).getText();
+            listTimeStamps.add(timeStampsText);
+        }
         return listTimeStamps;
     }
-    @FindBy (xpath = "//*[@class='about-dialog-content'']")
-    private WebElement fieldLinks;
 
-    public void prst(){
+
+
+    public void linkTextAboutMenu(String s) {
         settingIcon.click();
         waitUnitElementClickable(aboutMenuItem, 5);
         aboutMenuItem.click();
         waitUnitElementClickable(buttonClose, 5);
-        waitUnitElementDisplayed(fieldLinks, 5);
+        webDriver.findElement(By.linkText(s)).click();
+    }
+
+    @FindBy (xpath = "//*[@class='black' and text()='ShotSpotter - Terms of Service']")
+    private WebElement textTermsOfService;
+    public WebElement waitPageTermOfServisLoaded() {
+        return waitUnitElementDisplayed(textTermsOfService);
+    }
 
 
 }
