@@ -40,9 +40,7 @@ public class LoginTest {
     @AfterMethod
     public void afterMethod() {
         if (webDriver != null) {
-            webDriver.quit();
-        }
-    }
+            webDriver.quit();} }
 
     @Test
     public void testLoginPositive() {
@@ -61,8 +59,8 @@ public class LoginTest {
         loginPage = loginPage.login("esgtr@gh.ss", "Tes3!");
         Assert.assertTrue(loginPage.isPageLoaded(), "Login page is not loaded");
         Assert.assertTrue(loginPage.isInvalidCredentialMsgDisplayed(), "Error message was not displayed on login page");
-        Assert.assertEquals(loginPage.getErrorMsgText(), expextedError, "Error msg has wrong text");
-    }
+        Assert.assertEquals(loginPage.getErrorMsgText(), expextedError, "Error msg has wrong text"); }
+
     @Test
     public void testLogOut() {
         Assert.assertEquals(loginPage.getPageTitle(), "Shotspotter - Login", "Main page title is wrong");
@@ -73,8 +71,8 @@ public class LoginTest {
         Assert.assertTrue(mainPage.isPageLoaded(), "Settings icon is not displayed");
         loginPage = mainPage.logOut();
         Assert.assertEquals(loginPage.getPageTitle(), "Shotspotter - Login", "Main page title is wrong");
-        Assert.assertEquals(loginPage.getPageURL(), "https://alerts.shotspotter.biz/", "Wrong URL on Login test");
-    }
+        Assert.assertEquals(loginPage.getPageURL(), "https://alerts.shotspotter.biz/", "Wrong URL on Login test"); }
+
     @DataProvider
     public static Object[][] falseLoginEmail() {
         return new Object[][]{
@@ -88,22 +86,17 @@ public class LoginTest {
                 {"24sst.tau@@gmail.com", "P@ssword123", "The provided credentials are not correct."},
                 {"24sst.tau@gmail.com", "", "The provided credentials are not correct."},
                 {"24sst.tau@gmail.com", "P@ssword", "The provided credentials are not correct."},
-                {"", "", "The provided credentials are not correct."}};
-    }
+                {"", "", "The provided credentials are not correct."}}; }
 
     @Test(dataProvider = "falseLoginEmail")
     public void testLoginNegativDataProvider(String Email, String Password, String Errormsg) {
         LoginPage loginPage = new LoginPage(webDriver);
-
         Assert.assertEquals(loginPage.getPageTitle(), "Shotspotter - Login", "Login page title is wrong");
         Assert.assertEquals(loginPage.getPageURL(), "https://alerts.shotspotter.biz/", "Login URL on Login page");
-
         loginPage.login(Email, Password);
         loginPage.isPageLoaded();
-
         Assert.assertEquals(loginPage.getPageURL(), "https://alerts.shotspotter.biz/", "Login URL on Login page");
         Assert.assertTrue(loginPage.isPageLoaded(), "LoginPage is not loaded");
         Assert.assertTrue(loginPage.invalidCredentialsMsgDisplayed(),"Error messege was not displayd on LoginPage");
         Assert.assertEquals(loginPage.getErrormsgText(), Errormsg, "Invalid Text not correct");}
-
 }

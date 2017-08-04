@@ -5,11 +5,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-
-/**
- * Created by QA on 27.05.2017.
- */
-
 public class LoginPage extends BasePage {
 
     /**
@@ -21,7 +16,6 @@ public class LoginPage extends BasePage {
             super(webDriver);
             PageFactory.initElements(webDriver, this);
           waitUnitElementDisplayed(GObutton, 12);}
-
     /**
      * Locator of "E-mail" field at the page of site
      */
@@ -62,7 +56,6 @@ public class LoginPage extends BasePage {
      */
     public WebElement getGObutton(){return GObutton;}
 
-
     /**
      * To login to site
      *
@@ -77,18 +70,24 @@ public class LoginPage extends BasePage {
         GObutton.click();
             if  (isElementDisplayed(GObutton, 7)) {return (T) this;}
             else {return (T) PageFactory.initElements(webDriver, MainPage.class);}}
-
-
+    /**
+     * @return ожидает визуализации месседжа ошибки при неправильно введеных логин-данных
+     */
     public boolean isInvalidCredentialMsgDisplayed() {return invalidCredentialsErrorMsg.isDisplayed();}
-
+    /**
+     * @return геттер месседжа ошибки при неправильно введеных логин-данных
+     */
     public String getErrorMsgText(){return invalidCredentialsErrorMsg.getText();}
-
+    /**
+     * @return ожидает визуализации поля имейла
+     */
     public boolean isPageLoaded(){return emailField.isDisplayed();}
-
+    /**
+     * @return ожидает визуализации месседжа ошибки при неправильно введеных логин-данных
+     */
     public boolean invalidCredentialsMsgDisplayed() {
         return invalidCredentialsErrorMsg.isDisplayed();
     }
-
     /**
      *Common method to get Error Text when write wrong email or password
      *
@@ -97,6 +96,5 @@ public class LoginPage extends BasePage {
     public String getErrormsgText() {
         return invalidCredentialsErrorMsg.getText();
     }
-
 
 }

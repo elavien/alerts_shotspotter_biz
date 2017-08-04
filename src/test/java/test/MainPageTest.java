@@ -8,10 +8,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
+import org.testng.annotations.Optional;
 import page.LoginPage;
 import page.MainPage;
 
-import java.util.List;
+import java.util.*;
 
 import static org.hamcrest.CoreMatchers.containsString;
 
@@ -30,41 +31,34 @@ public class MainPageTest {
     @Parameters("browser")
     @BeforeMethod
     public void beforeMethod(@Optional ("firefox") String browser) {
-        /*if (browser.equalsIgnoreCase("firefox")) {
+        if (browser.equalsIgnoreCase("firefox")) {
             FirefoxDriverManager.getInstance().setup();
             webDriver = new FirefoxDriver();
-        } else  if (browser.equalsIgnoreCase("chrome")) {*/
+        } else  if (browser.equalsIgnoreCase("chrome")) {
         ChromeDriverManager.getInstance().setup();
         webDriver = new ChromeDriver();
-        /*}else {
-           throw new IllegalArgumentException("The Browser Type is Undefined");}*/
+        }else {
+           throw new IllegalArgumentException("The Browser Type is Undefined");}
         webDriver.navigate().to("https://alerts.shotspotter.biz");}
 
     @AfterMethod
     public void afterMethod() {
         if (webDriver != null) {
-            webDriver.quit();
-        }
-    }
+            webDriver.quit(); }  }
+
     @Test
     public void testSwitchIncidentsPeriod() throws InterruptedException {
         LoginPage loginPage = new LoginPage(webDriver);
         mainPage = loginPage.login(Email, Password);
         int[] timeFrameOptions = {24, 3, 7};
-
         for (int timeFrameOption : timeFrameOptions) {
-
             mainPage.switchTimeFramePeriod(timeFrameOption);
             int resultsCount = mainPage.getResultsCount();
             int incidentCardsCount = mainPage.getIncidentCardsCount();
-
             System.out.println("Period:" + timeFrameOption);
             System.out.println("resultsCount: " + resultsCount);
             System.out.println("incidentCardsCount: " + incidentCardsCount);
-
-            Assert.assertEquals(resultsCount, incidentCardsCount, "Results count doesn't match Incident Cards count");
-        }
-    }
+            Assert.assertEquals(resultsCount, incidentCardsCount, "Results count doesn't match Incident Cards count"); }  }
 
     @DataProvider
     public static Object[][] timeFrameOptions() {
@@ -78,37 +72,23 @@ public class MainPageTest {
         mainPage.switchTimeFramePeriod(timeFrameOption);
         int resultsCount = mainPage.getResultsCount();
         int incidentCardsCount = mainPage.getIncidentCardsCount();
-
         System.out.println("Period:" + timeFrameOption);
         System.out.println("resultsCount: " + resultsCount);
         System.out.println("incidentCardsCount: " + incidentCardsCount);
-
-        Assert.assertEquals(resultsCount, incidentCardsCount, "Results count doesn't match Incident Cards count");
-
-    }
+        Assert.assertEquals(resultsCount, incidentCardsCount, "Results count doesn't match Incident Cards count"); }
 
     @Test
     public void testValidateIncidentCardFields() {
-        String expectedCity = "Denver";
+        String expectedCity = "Atlanta GA";
         LoginPage loginPage = new LoginPage(webDriver);
         mainPage = loginPage.login(Email, Password);
         mainPage.switchTimeFramePeriod(7);
-
         mainPage.openIncidentsList();
-        List<String> listCities = mainPage.getIncidentCardsCities();
-        List<String> listStreets = mainPage.getIncidentCardsStreets();
-        List<String> listTimeStamps = mainPage.getIncidentCardsTimeStamps();
-        for (String elementCity : listCities) {
-            Assert.assertEquals(elementCity, expectedCity, "City is not Denver");
-        }
-        for (String elementStreet : listStreets) {
-            Assert.assertNotEquals(elementStreet, "", "Street address is empty");
-        }
-        for (String elementTimeStampt : listTimeStamps) {
-            Assert.assertNotEquals(elementTimeStampt, "", "Street address is empty");
-        }
-
-
-    }
-
+        List<String> listCities = mainPage.getIncidentCards("city");
+        List<String> listStreets = mainPage.getIncidentCards("street");
+        List<String> listTimeStamps = mainPage.getIncidentCards("time");
+        for (String elementCity : listCities) {Assert.assertEquals(elementCity, expectedCity, "City is not Denver");}
+        for (String elementStreet : listStreets) {Assert.assertNotEquals(elementStreet, "", "Street address is empty");}
+        for (String elementTimeStampt : listTimeStamps) {Assert.assertNotEquals(elementTimeStampt, "", "Street address is empty");}
+        Assert.assertTrue(mainPage.TimeStampsUnique(), "There is non-unique TimeStamp");}
 }

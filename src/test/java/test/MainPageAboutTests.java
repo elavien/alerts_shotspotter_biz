@@ -39,29 +39,17 @@ public class MainPageAboutTests {
         }else {
            throw new IllegalArgumentException("The Browser Type is Undefined");}
         webDriver.navigate().to("https://alerts.shotspotter.biz");
-
         LoginPage loginPage = new LoginPage(webDriver);
         mainPage = loginPage.login(Email, Password);}
 
     @AfterMethod
     public void afterMethod() {
         if (webDriver != null) {
-            webDriver.quit();
-        }
-    }
+            webDriver.quit(); }  }
 
     @Test
     public void termsOfServis() {
-        BasePage basePage = new BasePage(webDriver);
-               mainPage.linkTextAboutMenu("terms of service");
-        String parentWindow= webDriver.getWindowHandle();
-        Set<String> allWindows = webDriver.getWindowHandles();
-        for(String curWindow : allWindows){
-            webDriver.switchTo().window(curWindow);}
-            mainPage.waitPageTermOfServisLoaded();
-        Assert.assertEquals(basePage.getPageTitle(), "Apps-TOS", "Title of Terms of Service is wrong");
-        Assert.assertEquals(basePage.getPageURL(), "http://www.shotspotter.com/apps/tos", "Wrong URL on Terms of Service test");
-        webDriver.close();
-        webDriver.switchTo().window(parentWindow);
-    }
+        MainPage mainPage = new MainPage(webDriver);
+        mainPage.abOutMenuItem();
+        mainPage.WebWindoww();}
 }
