@@ -14,8 +14,6 @@ import page.MainPage;
 
 import java.util.*;
 
-import static org.hamcrest.CoreMatchers.containsString;
-
 
 /**
  * Created by Вита on 23.06.2017.
@@ -87,8 +85,9 @@ public class MainPageTest {
         List<String> listCities = mainPage.getIncidentCards("city");
         List<String> listStreets = mainPage.getIncidentCards("street");
         List<String> listTimeStamps = mainPage.getIncidentCards("time");
-        for (String elementCity : listCities) {Assert.assertEquals(elementCity, expectedCity, "City is not Denver");}
+        for (String elementCity : listCities) {Assert.assertEquals(elementCity, expectedCity, "City is not Atlanta GA");}
         for (String elementStreet : listStreets) {Assert.assertNotEquals(elementStreet, "", "Street address is empty");}
         for (String elementTimeStampt : listTimeStamps) {Assert.assertNotEquals(elementTimeStampt, "", "Street address is empty");}
-        Assert.assertTrue(mainPage.TimeStampsUnique(), "There is non-unique TimeStamp");}
+        Assert.assertTrue(mainPage.isTimeListContainsUniqueElements(), "Elements of timeList are not unique" );
+        }
 }

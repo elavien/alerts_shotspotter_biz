@@ -165,12 +165,12 @@ public class MainPage extends BasePage {
      * Это будет нужно для поиска дубликатов внутри этого массива в тестах
      */
     public List<String> getIncidentCards(String detal) {
-        List<String> listTimeStamps = new ArrayList<String>();
+        List<String> listCards = new ArrayList<String>();
         String XpathElement = getIncident(detal);
-        for (WebElement incidentTimeStamps : incidentsList) {
-            String TimeStampsText = incidentTimeStamps.findElement(By.xpath(XpathElement)).getText();
-            listTimeStamps.add(TimeStampsText);}
-        return listTimeStamps;}
+        for (WebElement incidentCard : incidentsList) {
+            String cardText = incidentCard.findElement(By.xpath(XpathElement)).getText();
+            listCards.add(cardText);}
+        return listCards;}
     /** Свитч для извлечения групповых вебэлементов по xpath внутри карточек LIST
      * @param detal формальнеое значение, которое задастся в тестах
      * @return стринговое xpath-значение
@@ -190,11 +190,25 @@ public class MainPage extends BasePage {
         waitUnitElementDisplayed(settingMenu);
         waitUnitElementClickable(aboutMenuItem, 5).click();}
 
-    private List<WebElement> incidentTimeStamp;
-    public boolean TimeStampsUnique() {
-        Set incidentTimeStampCount = new HashSet(incidentTimeStamp);
-        if (incidentTimeStampCount.size() == incidentTimeStamp.size()) {return true;}
-        return false;}
+    /**
+     * В созданный массив записываются стринговые значения, извлеченные в вебэлементах timeList.
+     * Создается новый массив с перезаписью этих элементов, с условием, чтобы не было повторений значений.
+     * Затем эти два массива сравниваются
+     *
+     * @return true if Time list contains unique elements
+     */
+    @FindBy(xpath = "//incident-list//incident-card//div[contains(@class, 'incident')]//div[@class='cell day']//div[@class='content']")
+    private List<WebElement> timeList;
+    public boolean isTimeListContainsUniqueElements() {
+        List<String> timeTextList = new ArrayList<>();
+        for (WebElement timeElement : timeList) {
+            timeTextList.add(timeElement.getText()); }
+        Set<String> timeTextUnique = new HashSet<String>(timeTextList);
+        if (timeTextUnique.equals(timeTextList)) {
+            return false;
+        } else {
+            return true;
+        }}
 
     /**
      * Работа с новыми вкладками. Определяет стринговые значения открытых вкладок. Если полученное значение окна не эквивалентно
